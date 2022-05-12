@@ -1,0 +1,5 @@
+# copy/move me to .env file
+
+AZURE_STORAGE_ACCOUNT = ""
+AZURE_STORAGE_TABLE = ""
+AZURE_STORAGE_KEY = ""
