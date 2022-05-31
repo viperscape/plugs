@@ -5,7 +5,7 @@ const app_name = "test-api"
 let debug = true
 
 const database = require("./database.js")
-database.setup() // todo consider returning client context
+database.setup()
 
 
 
