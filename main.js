@@ -17,6 +17,7 @@ app.use(
     })
 );
 
+// add a debug key to test with
 if (debug) {
     let key = "884c487a-aeed-4936-a258-1082642a81a3"
     let hash = "$2b$10$ZxxwqIQJZ1Rge22AIWMJDuOoNAPRgfidzvLlfS1uap2ws.N5nLwUi"
