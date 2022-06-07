@@ -92,8 +92,8 @@ exports.setup = async (app) => {
 
             let is_auth = await gen_session(app_name, key, secret) // generate a session, if the key pair matches
 
-            if (!is_auth) res.send(400)
-            else res.send(200)
+            if (is_auth) res.send(200)
+            else res.send(400)
         }
         catch (err) {
             console.error(err)
