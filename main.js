@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const port = 6000
-const app_name = "my-awesome-app"
+
 let debug = true
 
 const database = require("./database.js")
@@ -23,11 +23,11 @@ if (debug) {
     let secret = apikey.gen_uuid()
     apikey.hash(secret).then((hash) => {
         console.log("key:", key, "\nsecret:", secret)
-        database.add(app_name, key, hash, true)
+        database.add("my-awesome-app", key, hash, true)
     })
 }
 
-routes.setup(app, app_name)
+routes.setup(app)
 
 
 app.listen(port, () => {
