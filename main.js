@@ -1,14 +1,14 @@
 const express = require("express")
 const app = express()
 const port = 6000
-const app_name = "test-api"
+const app_name = "my-awesome-app"
 let debug = true
 
 const database = require("./database.js")
 database.setup()
 
 
-
+const apikey = require("./apikey.js")
 const routes = require("./routes.js")
 
 app.use(
@@ -19,10 +19,12 @@ app.use(
 
 // add a debug key to test with
 if (debug) {
-    let key = "884c487a-aeed-4936-a258-1082642a81a3"
-    let hash = "$2b$10$ZxxwqIQJZ1Rge22AIWMJDuOoNAPRgfidzvLlfS1uap2ws.N5nLwUi"
-    
-    database.add(app_name, key, hash, true)
+    let key = apikey.gen_uuid()
+    let secret = apikey.gen_uuid()
+    apikey.hash(secret).then((hash) => {
+        console.log("key:", key, "\nsecret:", secret)
+        database.add(app_name, key, hash, true)
+    })
 }
 
 routes.setup(app, app_name)

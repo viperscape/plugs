@@ -10,6 +10,6 @@ exports.hash = async (secret) => {
     return await bcrypt.hash(secret, salt_rounds)
 }
 
-exports.compare_secrets = async (stored_hash, test_secret) => {
-    return await bcrypt.compare(test_secret, stored_hash)
+exports.compare_secrets = async (hash, secret) => {
+    return await bcrypt.compare(secret, hash)
 }

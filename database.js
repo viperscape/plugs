@@ -19,13 +19,13 @@ exports.setup = async () => {
     }
 }
 
-exports.add = async (app_name, key, hash, is_paid) => {
+exports.add = async (app_name, key, hash) => {
     try {
         const entity = {
             partitionKey: app_name,
             rowKey: key,
             hash: hash,
-            isPaid: is_paid,
+            isActive: true,
             creationDate: new Date()
         }
 
@@ -36,13 +36,15 @@ exports.add = async (app_name, key, hash, is_paid) => {
     }
 }
 
-exports.update = async (app_name, key, hash, is_paid) => {
+// note should only be called after hash has been compared
+exports.update = async (app_name, key, is_active, hash) => {
     const entity = {
         partitionKey: app_name,
         rowKey: key,
-        hash: hash,
-        isPaid: is_paid
+        isActive: is_active
     }
+
+    if (hash) entity.hash = hash // updating the hash?
 
     await client.updateEntity(entity)
 }
@@ -50,18 +52,6 @@ exports.update = async (app_name, key, hash, is_paid) => {
 exports.get = async (app_name, key) => {
     try {
         return await client.getEntity(app_name, key)
-    }
-    catch (e) {
-        console.error(e)
-    }
-}
-
-/// call back with entities to iterate on
-exports.foreach = async (cb) => {
-    try {
-        for await (const ent of client.listEntities()) {
-            if (cb) cb(ent);
-        }
     }
     catch (e) {
         console.error(e)
